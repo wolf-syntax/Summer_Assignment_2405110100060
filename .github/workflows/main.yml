@@ -1,0 +1,21 @@
+name: Create Folders
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          for w in Week1 Week2 Week3 Week4; do
+            for d in Day1 Day2 Day3 Day4 Day5 OOPS; do
+              mkdir -p "$w/$d"
+              touch "$w/$d/.gitkeep"
+            done
+          done
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Auto-created all required folders"
+          git push
