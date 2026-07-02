@@ -1,29 +1,31 @@
-#include <string>
 #include <stack>
-#include <algorithm>
 using namespace std;
 
-class Solution {
+class MyQueue {
+    stack<int> input, output;
 public:
-    string removeDuplicates(string s) {
-        stack<char> st;
-        for (char c : s) {
-           
-            if (!st.empty() && st.top() == c) {
-                st.pop();
-            } else {
-               
-                st.push(c);
+    void push(int x) {
+        input.push(x);
+    }
+    
+    int pop() {
+        peek(); 
+        int topVal = output.top();
+        output.pop();
+        return topVal;
+    }
+    
+    int peek() {
+        if (output.empty()) {
+            while (!input.empty()) {
+                output.push(input.top());
+                input.pop();
             }
         }
-        
-        
-        string res = "";
-        while (!st.empty()) {
-            res += st.top();
-            st.pop();
-        }
-        reverse(res.begin(), res.end()); 
-        return res;
+        return output.top();
+    }
+    
+    bool empty() {
+        return input.empty() && output.empty();
     }
 };
